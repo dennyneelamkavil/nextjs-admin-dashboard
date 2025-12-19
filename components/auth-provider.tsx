@@ -35,7 +35,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const res = await signIn("credentials", {
           username,
           password,
-          redirect: false,
+          redirect: true,
+          callbackUrl: "/",
         });
 
         if (!res || !res.ok) {
