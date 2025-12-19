@@ -8,8 +8,7 @@ import RecentOrders from "@/components/ecommerce/RecentOrders";
 import DemographicCard from "@/components/ecommerce/DemographicCard";
 
 export const metadata: Metadata = {
-  title:
-    "Next.js E-commerce Dashboard | Surprez - Next.js Dashboard Template",
+  title: "Next.js E-commerce Dashboard | Surprez - Next.js Dashboard Template",
   description: "This is Next.js Home for Surprez Dashboard Template",
 };
 

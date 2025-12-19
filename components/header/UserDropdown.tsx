@@ -7,6 +7,7 @@ import { DropdownItem } from "@/components/ui/dropdown/DropdownItem";
 import { useSession, signOut } from "next-auth/react";
 import { hasPermission } from "@/lib/authorization";
 import { LogOut, Settings, UserCircle } from "lucide-react";
+import { toast } from "react-toastify";
 
 export default function UserDropdown() {
   const { data: session } = useSession();
@@ -24,6 +25,19 @@ export default function UserDropdown() {
   if (!session?.user) return null;
 
   const { username, role } = session.user;
+
+  async function handleSignOut() {
+    const toastId = toast.loading("Signing out...");
+
+    await signOut({ callbackUrl: "/auth/sign-in" });
+
+    toast.update(toastId, {
+      render: "Signed out successfully",
+      type: "success",
+      isLoading: false,
+      autoClose: 3000,
+    });
+  }
 
   return (
     <div className="relative">
@@ -121,7 +135,7 @@ export default function UserDropdown() {
 
         {/* Sign out */}
         <button
-          onClick={() => signOut({ callbackUrl: "/auth/sign-in" })}
+          onClick={handleSignOut}
           className="flex items-center gap-3 px-3 py-2 mt-3 font-medium rounded-lg text-theme-sm hover:bg-gray-100"
         >
           <LogOut size={20} />

@@ -1,15 +1,15 @@
-import { Outfit } from 'next/font/google';
-import './globals.css';
+import { Outfit } from "next/font/google";
+import "./globals.css";
 
-import { SidebarProvider } from '@/context/SidebarContext';
-import { ThemeProvider } from '@/context/ThemeContext';
-import { Metadata } from 'next';
+import { SidebarProvider } from "@/context/SidebarContext";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { Metadata } from "next";
+import { ToastContainer } from "react-toastify";
 import { Providers } from "@/components/client-providers";
 
 const outfit = Outfit({
   subsets: ["latin"],
 });
-
 
 export const metadata: Metadata = {
   title: "Surprez - Admin Dashboard",
@@ -35,7 +35,15 @@ export default function RootLayout({
         <ThemeProvider>
           <SidebarProvider>
             <Providers>{children}</Providers>
-            </SidebarProvider>
+          </SidebarProvider>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar
+            pauseOnFocusLoss={false}
+            pauseOnHover
+            draggable
+          />
         </ThemeProvider>
       </body>
     </html>

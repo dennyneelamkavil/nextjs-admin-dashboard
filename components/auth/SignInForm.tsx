@@ -4,11 +4,11 @@ import Checkbox from "@/components/form/input/Checkbox";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
-import Link from "next/link";
+import { EyeCloseIcon, EyeIcon } from "@/icons";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function SignInForm() {
   const router = useRouter();
@@ -50,15 +50,24 @@ export default function SignInForm() {
     }
 
     try {
+      const toastId = toast.loading("Signing in...");
+
       const res = await signIn("credentials", {
         username: formData.username,
         password: formData.password,
+        redirect: false,
       });
 
       if (!res || !res.ok) {
         throw new Error(res?.error || "Invalid username or password");
       }
 
+      toast.update(toastId, {
+        render: "Signed in successfully",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
       router.push("/"); // dashboard
     } catch (err: any) {
       setError(err.message);
